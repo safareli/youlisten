@@ -36,5 +36,5 @@
     "sanitize-filename": "^1.0.1",
     "ytdl": "0.1.9"
   },
-  "keywords": []
+  "keywords": ["youtube", "mp3", "audio", "video", "listen", "playlist", "download","convert"]
 }
