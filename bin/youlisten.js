@@ -10,6 +10,7 @@
 var path      = require('path');
 require('coffee-script/register');
 var youlisten = require('../lib/youlisten');
+var t         = require('../lib/t');
 
 var dir, id = process.argv[2];
 
