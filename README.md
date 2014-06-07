@@ -10,7 +10,7 @@ Install the module with: `npm i -g  youlisten`
 Usage: youlisten <id> [directory]
 
 id           video or playlist ID
-directory    downlaod location
+directory    download location
 ```
 
 > ffmpeg is required for converting video to mp3
