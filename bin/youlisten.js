@@ -12,17 +12,17 @@ require('coffee-script/register');
 var youlisten = require('../lib/youlisten');
 var t         = require('../lib/t');
 
-var dir, id = process.argv[2];
+var dir, url = process.argv[2];
 
-if (id.length > 11) {
+if (url.indexOf('list=')) {
   dir = process.argv[3] || 'downloads';
-  youlisten.downloadPlaylist(id, path.join(process.cwd(), dir), function(error, location) {
+  youlisten.downloadPlaylist(url, path.join(process.cwd(), dir), function(error, location) {
     console.log((t.margin(' ', 4)) + ' LOCATION: ' + location);
     return process.exit();
   });
-} else if (id.length === 11) {
+} else if (url.indexOf('v=')) {
   dir = (process.argv[3] ? process.argv[3] : 'downloads/_videos');
-  youlisten.downloadVideo(id, path.join(process.cwd(), dir), function(error, location) {
+  youlisten.downloadVideo(url, path.join(process.cwd(), dir), function(error, location) {
     if (error) {
       console.error(error);
     } else {
@@ -31,8 +31,7 @@ if (id.length > 11) {
     return process.exit();
   });
 } else {
-  console.log('# arg1 is required');
-  console.log('# arg1 = video/playlist ID');
-  console.log('# arg2 = downlaod location ');
-  console.log('$ youlisten arg1 [arg2]');
+  console.log('$ youlisten <id> [directory]');
+  console.log('# id         video or playlist ID');
+  console.log('# directory  download location');
 }
