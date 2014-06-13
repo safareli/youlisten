@@ -34,12 +34,13 @@ downloadVideo = (url, dir, done,extraInfo) ->
       done(err)
       return
       
-    outFile = path.join( dir, sanit("#{info.title}.mp3"))
+    fileName = sanit("#{info.title}.mp3");
+    outFile = path.join( dir, fileName)
     console.log "#{t.margin(' ',16)}URL: #{url}"
     console.log "#{t.margin(' ',14)}TITLE: #{info.title}"
     if fs.existsSync(outFile)
       console.log t.center("ALREADY DOWNLOADED",' ')
-      done(null,outFile)
+      done(null,fileName)
       return
     outStream = fs.createWriteStream(outFile)
     itemDuration = dateDelta()
@@ -48,7 +49,7 @@ downloadVideo = (url, dir, done,extraInfo) ->
       .toFormat('mp3')
       .on 'progress', onProgress.bind(undefined,info.length_seconds,itemDuration,extraInfo)
       .on 'error', onError.bind(undefined,done)
-      .on 'end', onEnd.bind(undefined,done,itemDuration)
+      .on 'end', onEnd.bind(undefined,done,itemDuration,fileName)
       .writeToStream outStream, end: true
 downloadPlaylist = (url,dir,done)->
   wholeDuration = dateDelta()
@@ -59,7 +60,6 @@ downloadPlaylist = (url,dir,done)->
     done: (errors, window) ->
       return done(errors) if errors
       get = window.document.getElementsByClassName.bind window.document
-      console.log('titleClass,url\n',titleClass,url);
       playlistName = get(titleClass)[0].textContent.trim()
       videoUrls = [].map.call get(videoClass), (l) ->
         l.href
