@@ -7,10 +7,13 @@ Install the module with: `npm i -g  youlisten`
 
 ## CLI
 ```
-Usage: youlisten <id> [directory]
+$ youlisten <url> [dir]
+# url          video or playlist URL
+# dir          downlod directory
+---
+$ youlisten <dir>
+# dir          directory where urls from <dir>/listen.json will be downloaded
 
-id           video or playlist ID
-directory    download location
 ```
 
 > ffmpeg is required for converting video to mp3

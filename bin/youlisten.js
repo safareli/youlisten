@@ -32,18 +32,21 @@ function download (url,dir,done){
       if(done) done();
       else process.exit();
     });
-  } else if(fs.existsSync(path.join(process.cwd(),process.argv[2],'listen.json'))){
-    var links = JSON.parse(fs.readFileSync(path.join(process.cwd(),process.argv[2],'listen.json')));
-    download(links.shift(),process.argv[2],function next() {
+  } else if(!!(dir = url) && fs.existsSync(path.join(process.cwd(),dir,'listen.json'))){
+    var links = JSON.parse(fs.readFileSync(path.join(process.cwd(),dir,'listen.json')));
+    download(links.shift(),dir,function next() {
       if (links.length)
-        download(links.shift(),process.argv[2],next);
+        download(links.shift(),dir,next);
     })
-  }else {
-    console.log('$ youlisten <id> [directory]');
-    console.log('# id         video or playlist ID');
-    console.log('# directory  download location');
+  } else {
+    console.log('$ youlisten <url> [dir]');
+    console.log('# url          video or playlist URL');
+    console.log('# dir          downlod directory');
+    console.log('----');
+    console.log('youlisten <dir>');
+    console.log('# dir          directory where urls from <dir>/listen.json will be downloaded');
   }
 
 }
 
-  download(process.argv[2],process.argv[3]);
+download(typeof process.argv[2] == 'string' ? process.argv[2] : '', process.argv[3]);
